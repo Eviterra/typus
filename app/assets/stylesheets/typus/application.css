@@ -1,6 +1,8 @@
 /*
 *= require jquery.fancybox-1.3.4
 *= require chosen
+*= require daterangepicker/jquery-ui
+*= require daterangepicker/ui.daterangepicker
 *= require css/formalize
 *= require css/fluid
 *= require typus/reset
