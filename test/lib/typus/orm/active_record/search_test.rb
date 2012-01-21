@@ -91,23 +91,17 @@ class ActiveRecordTest < ActiveSupport::TestCase
 
   context "build_datetime_conditions" do
 
-    setup do
-      @tomorrow = Time.zone.now.beginning_of_day.tomorrow.to_s(:db)
-    end
+    [["2012/1/13", Date.new(2012,1,13).to_time..Date.new(2012,1,13).end_of_day],
+      ["2012/1/13 - 2012/1/15", Date.new(2012,1,13).to_time..Date.new(2012,1,15).end_of_day]].each do |input, interval|
 
-    [["today", 0.days.ago.beginning_of_day.to_s(:db)],
-     ["last_few_days", 3.days.ago.beginning_of_day.to_s(:db)],
-     ["last_7_days", 6.days.ago.beginning_of_day.to_s(:db)],
-     ["last_30_days", 30.days.ago.beginning_of_day.to_s(:db)]].each do |interval|
-
-      should "generate the condition for #{interval.first}" do
-        output = Article.build_datetime_conditions('created_at', interval.first).first
+      should "generate the condition for #{input}" do
+        output = Article.build_datetime_conditions('created_at', input).first
         assert_equal "articles.created_at BETWEEN ? AND ?", output
       end
 
-      should "work for #{interval.first}" do
-        expected = [interval.last, @tomorrow]
-        output = Article.build_datetime_conditions('created_at', interval.first)[1..-1]
+      should "work for #{input}" do
+        expected = [interval.first.to_s(:db), interval.last.to_s(:db)]
+        output = Article.build_datetime_conditions('created_at', input)[1..-1]
         assert_equal expected, output
       end
 
@@ -117,33 +111,17 @@ class ActiveRecordTest < ActiveSupport::TestCase
 
   context "build_date_conditions" do
 
-    setup do
-      @tomorrow = Date.tomorrow.to_s(:db)
-    end
+    [["2012/1/13", Date.new(2012,1,13)..Date.new(2012,1,13)],
+     ["2012/1/13 - 2012/1/15", Date.new(2012,1,13)..Date.new(2012,1,15)]].each do |input, interval|
 
-    should "generate the condition for today (which is an special case)" do
-      output = Article.build_date_conditions('created_at', "today").first
-      assert_equal "articles.created_at BETWEEN ? AND ?", output
-    end
-
-    should "work for today (which is an special case)" do
-      expected = [0.days.ago.to_date.to_s(:db), 0.days.ago.tomorrow.to_date.to_s(:db)]
-      output = Article.build_date_conditions('created_at', "today")[1..-1]
-      assert_equal expected, output
-    end
-
-    [["last_few_days", 3.days.ago.to_date.to_s(:db)],
-     ["last_7_days", 6.days.ago.to_date.to_s(:db)],
-     ["last_30_days", 30.days.ago.to_date.to_s(:db)]].each do |interval|
-
-      should "generate the condition for #{interval.first}" do
-        output = Article.build_date_conditions('created_at', interval.first).first
+      should "generate the condition for #{input}" do
+        output = Article.build_date_conditions('created_at', input).first
         assert_equal "articles.created_at BETWEEN ? AND ?", output
       end
 
-      should "work for #{interval.first}" do
-        expected = [interval.last, @tomorrow]
-        output = Article.build_date_conditions('created_at', interval.first)[1..-1]
+      should "work for #{input}" do
+        expected = [interval.first.to_s(:db), interval.last.to_s(:db)]
+        output = Article.build_date_conditions('created_at', input)[1..-1]
         assert_equal expected, output
       end
 
@@ -230,51 +208,6 @@ class ActiveRecordTest < ActiveSupport::TestCase
       params = { :status => "false" }
       expected = { :status => false }
       assert_equal expected, TypusUser.build_conditions(params).first
-    end
-
-    should "return_sql_conditions_on_filtering_typus_users_by_created_at today" do
-      expected = ["typus_users.created_at BETWEEN ? AND ?",
-                  Time.zone.now.beginning_of_day.to_s(:db),
-                  Time.zone.now.beginning_of_day.tomorrow.to_s(:db)]
-      params = { :created_at => "today" }
-
-      assert_equal expected, TypusUser.build_conditions(params).first
-    end
-
-    should "return_sql_conditions_on_filtering_typus_users_by_created_at last_few_days" do
-      expected = ["typus_users.created_at BETWEEN ? AND ?",
-                  3.days.ago.beginning_of_day.to_s(:db),
-                  Time.zone.now.beginning_of_day.tomorrow.to_s(:db)]
-      params = { :created_at => "last_few_days" }
-
-      assert_equal expected, TypusUser.build_conditions(params).first
-    end
-
-    should "return_sql_conditions_on_filtering_typus_users_by_created_at last_7_days" do
-      expected = ["typus_users.created_at BETWEEN ? AND ?",
-                  6.days.ago.beginning_of_day.to_s(:db),
-                  Time.zone.now.beginning_of_day.tomorrow.to_s(:db)]
-      params = { :created_at => "last_7_days" }
-
-      assert_equal expected, TypusUser.build_conditions(params).first
-    end
-
-    should "return_sql_conditions_on_filtering_typus_users_by_created_at last_30_days" do
-      expected = ["typus_users.created_at BETWEEN ? AND ?",
-                  30.days.ago.beginning_of_day.to_s(:db),
-                  Time.zone.now.beginning_of_day.tomorrow.to_s(:db)]
-      params = { :created_at => "last_30_days" }
-
-      assert_equal expected, TypusUser.build_conditions(params).first
-    end
-
-    should "return_sql_conditions_on_filtering_posts_by_published_at today" do
-      expected = ["posts.published_at BETWEEN ? AND ?",
-                  Time.zone.now.beginning_of_day.to_s(:db),
-                  Time.zone.now.beginning_of_day.tomorrow.to_s(:db)]
-      params = { :published_at => "today" }
-
-      assert_equal expected, Post.build_conditions(params).first
     end
 
     should "return_sql_conditions_on_filtering_posts_by_string" do

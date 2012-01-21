@@ -4,9 +4,10 @@ module Admin::Resources::FiltersHelper
     if (typus_filters = resource.typus_filters).any?
       locals = {}
 
-      locals[:filters] = typus_filters.map do |key, value|
-                           { :key => set_filter(key, value),
-                             :value => send("#{value}_filter", key) }
+      locals[:filters] = typus_filters.map do |key, type|
+                           { :key => set_filter(key, type),
+                             :type => type,
+                             :values => send("#{type}_filter", key) }
                          end
 
       rejections = %w(controller action locale utf8 sort_order order_by) + locals[:filters].map { |f| f[:key] }
@@ -16,8 +17,8 @@ module Admin::Resources::FiltersHelper
     end
   end
 
-  def set_filter(key, value)
-    return key unless value == :belongs_to
+  def set_filter(key, type)
+    return key unless type == :belongs_to
 
     att_assoc = @resource.reflect_on_association(key.to_sym)
     class_name = att_assoc.options[:class_name] || key.capitalize.camelize

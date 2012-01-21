@@ -24,6 +24,13 @@ $(document).ready(function() {
         $('.action-toggle').each(function() { this.checked = status; });
     });
 
+    $('.daterangepicker').each(function() {
+      $(this).daterangepicker({
+        // using default
+        // rangeSplitter: '-',
+        dateFormat: 'yy/m/d'
+      })
+    })
 });
 
 var Typus = {};

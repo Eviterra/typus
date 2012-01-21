@@ -3,8 +3,13 @@
   <div id="filters">
     <ul>
       <% filters.each do |filter| %>
-        <% key, value = filter[:key], filter[:value] %>
-        <li><%= select_tag key, options_for_select(value, params[key]) %></li>
+        <% key, values, type = filter[:key], filter[:values], filter[:type] %>
+        <% case type %>
+        <% when :date, :datetime, :timestamp %>
+          <li><%= text_field_tag key, params[key], :class => "daterangepicker", :title => @resource.human_attribute_name(key), :autocomplete => 'off' %></li>
+        <% else %>
+          <li><%= select_tag key, options_for_select(values, params[key]) %></li>
+        <% end %>
       <% end %>
 
       <% hidden_filters.each do |key, value| %>

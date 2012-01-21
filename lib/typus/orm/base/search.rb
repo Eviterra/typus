@@ -11,31 +11,20 @@ module Typus
           { key => (value == 'true') ? true : false }
         end
 
+        # Timezone?
         def build_datetime_conditions(key, value)
-          tomorrow = Time.zone.now.beginning_of_day.tomorrow
-
-          interval = case value
-                     when 'today'         then 0.days.ago.beginning_of_day..tomorrow
-                     when 'last_few_days' then 3.days.ago.beginning_of_day..tomorrow
-                     when 'last_7_days'   then 6.days.ago.beginning_of_day..tomorrow
-                     when 'last_30_days'  then 30.days.ago.beginning_of_day..tomorrow
-                     end
-
+          firstdate, lastdate = value.strip.split('-')
+          lastdate ||= firstdate
+          interval = firstdate.to_date.beginning_of_day..lastdate.to_date.end_of_day
           build_filter_interval(interval, key)
         end
 
         alias_method :build_time_conditions, :build_datetime_conditions
 
         def build_date_conditions(key, value)
-          tomorrow = 0.days.ago.tomorrow.to_date
-
-          interval = case value
-                     when 'today'         then 0.days.ago.to_date..tomorrow
-                     when 'last_few_days' then 3.days.ago.to_date..tomorrow
-                     when 'last_7_days'   then 6.days.ago.to_date..tomorrow
-                     when 'last_30_days'  then 30.days.ago.to_date..tomorrow
-                     end
-
+          firstdate, lastdate = value.strip.split('-')
+          lastdate ||= firstdate
+          interval = firstdate.to_date..lastdate.to_date
           build_filter_interval(interval, key)
         end
 
