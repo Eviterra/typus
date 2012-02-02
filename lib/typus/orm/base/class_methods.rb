@@ -75,6 +75,19 @@ module Typus
           filter.to_sym.eql?(:index) ? ['id'] : model_fields.keys
         end
 
+        def typus_filters
+          ActiveSupport::OrderedHash.new.tap do |fields_with_type|
+            get_typus_filters.each do |field|
+              fields_with_type[field.to_s] = association_attribute?(field) || model_fields[field.to_sym]
+            end
+          end
+        end
+
+        def get_typus_filters
+          data = read_model_config['filters'] || ""
+          data.extract_settings.map(&:to_sym)
+        end
+
         #--
         # With +Typus::Resources.setup+ we can define application defaults.
         #
