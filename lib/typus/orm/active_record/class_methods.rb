@@ -32,25 +32,6 @@ module Typus
           end
         end
 
-        def get_typus_fields_for(filter)
-          data = read_model_config['fields']
-          fields = case filter.to_sym
-                   when :index                  then data['index'] || data['list']
-                   when :new, :create           then data['new'] || data['form']
-                   when :edit, :update, :toggle then data['edit'] || data['form']
-                   else
-                     data[filter.to_s]
-                   end
-
-          fields ||= data['default'] || typus_default_fields_for(filter)
-          fields = fields.extract_settings if fields.is_a?(String)
-          fields.map(&:to_sym)
-        end
-
-        def typus_default_fields_for(filter)
-          filter.to_sym.eql?(:index) ? ['id'] : model_fields.keys
-        end
-
         def virtual_attribute?(field)
           :virtual if virtual_fields.include?(field.to_s)
         end
