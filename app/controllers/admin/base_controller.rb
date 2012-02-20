@@ -2,12 +2,9 @@ class Admin::BaseController < ActionController::Base
 
   include Typus::Authentication::const_get(Typus.authentication.to_s.classify)
 
-  before_filter :reload_config_and_roles
-  before_filter :authenticate
-  before_filter :set_locale
+  before_filter :reload_config_and_roles, :authenticate, :set_locale
 
-  helper_method :admin_user
-  helper_method :current_role
+  helper_method :admin_user, :current_role
 
   protected
 

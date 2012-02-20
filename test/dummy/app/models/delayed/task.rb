@@ -1,5 +1,5 @@
 class Delayed::Task < ActiveRecord::Base
 
-  set_table_name "delayed_tasks"
+  self.table_name = "delayed_tasks"
 
 end

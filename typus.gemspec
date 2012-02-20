@@ -28,7 +28,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency "bcrypt-ruby", "~> 3.0.0"
   s.add_dependency "jquery-rails"
-  s.add_dependency "kaminari", "~> 0.12.4"
+  s.add_dependency "kaminari", "~> 0.13.0"
   s.add_dependency "rails", ">= 3.1.3"
 
   # Development dependencies are defined in the `Gemfile`.

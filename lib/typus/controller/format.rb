@@ -19,44 +19,29 @@ module Typus
       #       to be able to process large amounts of data.
       #++
       def generate_csv
-        if can_export?(:csv)
-          fields = @resource.typus_fields_for(:csv)
+        fields = @resource.typus_fields_for(:csv)
+        options = { :conditions => @conditions, :batch_size => 1000 }
 
-          filename = Rails.root.join("tmp", "export-#{@resource.to_resource}-#{Time.zone.now.to_s(:number)}.csv")
-
-          options = { :conditions => @conditions, :batch_size => 1000 }
-
-          ::CSV.open(filename, 'w') do |csv|
-            csv << fields.keys.map { |k| @resource.human_attribute_name(k) }
-            @resource.find_in_batches(options) do |records|
-              records.each do |record|
-                csv << fields.map do |key, value|
-                         case value
-                         when :transversal
-                           a, b = key.split(".")
-                           record.send(a).send(b)
-                         when :belongs_to
-                           record.send(key).try(:to_label)
-                         else
-                           record.send(key)
-                         end
+        data = ::CSV.generate do |csv|
+          csv << fields.keys.map { |k| @resource.human_attribute_name(k) }
+          @resource.find_in_batches(options) do |records|
+            records.each do |record|
+              csv << fields.map do |key, value|
+                       case value
+                       when :transversal
+                         a, b = key.split(".")
+                         record.send(a).send(b)
+                       when :belongs_to
+                         record.send(key).try(:to_label)
+                       else
+                         record.send(key)
                        end
-              end
+                     end
             end
           end
-
-          send_file filename
-        else
-          not_allowed
         end
-      end
 
-      def generate_json
-        export(:json)
-      end
-
-      def generate_xml
-        can_export?(:xml) ? export(:xml) : not_allowed
+        send_data data, :filename => "export-#{@resource.to_resource}-#{Time.zone.now.to_s(:number)}.csv"
       end
 
       def export(format)
@@ -67,10 +52,6 @@ module Typus
         get_paginated_data
 
         render format => @items.send("to_#{format}", :methods => methods, :except => except)
-      end
-
-      def can_export?(format)
-        @resource.typus_options_for(:export).extract_settings.include?(format.to_s)
       end
 
     end

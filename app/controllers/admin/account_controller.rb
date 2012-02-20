@@ -2,9 +2,7 @@ class Admin::AccountController < Admin::BaseController
 
   layout 'admin/session'
 
-  skip_before_filter :reload_config_and_roles
-  skip_before_filter :authenticate
-  skip_before_filter :set_locale
+  skip_before_filter :reload_config_and_roles, :authenticate, :set_locale
 
   before_filter :sign_in?, :except => [:forgot_password, :send_password, :show]
   before_filter :new?, :only => [:forgot_password, :send_password]

@@ -4,6 +4,21 @@ CHANGELOG
 3.1.8 (unreleased)
 ------------------
 
+ * [CHANGED] CSV generation is now performed in memory so we play nice
+   with Heroku.
+
+ * [CHANGED] We now can export XML, CSV and JSON without restriction. If
+   fields are not defined for a format, defaults will be used.
+
+ * [CHANGED] Updated Kaminari to `0.13.0` so we are now Rails `3.2.0`
+   compatible.
+
+ * [CHANGED] We now also load configuration files from "lib/<plugin>/config"
+   as this is marked as deprecated in Rails 3.2.0.
+
+ * [CHANGED] Updated Gems for the dummy application. This fixes deprecation
+   warnings and keeps the plugin up to date.
+
 Changes: <https://github.com/fesplugas/typus/compare/v3.1.7...master>
 
 
