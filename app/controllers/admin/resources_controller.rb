@@ -37,7 +37,7 @@ class Admin::ResourcesController < Admin::BaseController
     @item = @resource.new(params[:resource])
 
     respond_to do |format|
-      format.html # new.html.erb
+      format.html
       format.json { render :json => @item }
     end
   end
@@ -77,9 +77,13 @@ class Admin::ResourcesController < Admin::BaseController
       prepend_resources_action("Edit", {:action => 'edit', :id => @item})
     end
 
+    custom_actions_for(:show).each do |action|
+      prepend_resources_action(action.titleize, {:action => action, :id => @item})
+    end
+
     respond_to do |format|
-      format.html # show.html.erb
-      format.xml { can_export?(:xml) ? render(:xml => @item) : not_allowed }
+      format.html
+      format.xml { render :xml => @item }
       format.json { render :json => @item }
     end
   end
@@ -134,6 +138,8 @@ class Admin::ResourcesController < Admin::BaseController
 
   def resource
     params[:controller].extract_class
+  rescue
+    params[:controller].extract_singular_class
   end
   helper_method :resource
 
@@ -160,7 +166,6 @@ class Admin::ResourcesController < Admin::BaseController
   end
   helper_method :fields
 
-  # Here we set the current scope!
   def set_scope
     if (scope = params[:scope])
      if @resource.respond_to?(scope)

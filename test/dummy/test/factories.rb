@@ -1,6 +1,4 @@
-##
-# Auth
-##
+# Authentication
 
 FactoryGirl.define do
   factory :admin_user do
@@ -23,9 +21,7 @@ FactoryGirl.define do
   end
 end
 
-##
 # CRUD
-##
 
 FactoryGirl.define do
   factory :entry do
@@ -49,9 +45,7 @@ FactoryGirl.define do
   end
 end
 
-##
 # CRUD Extended
-##
 
 FactoryGirl.define do
   factory :asset do
@@ -91,9 +85,7 @@ FactoryGirl.define do
   end
 end
 
-##
 # HasOne Association
-#
 
 FactoryGirl.define do
   factory :invoice do
@@ -106,9 +98,7 @@ FactoryGirl.define do
   end
 end
 
-##
 # HasManyThrough Association
-#
 
 FactoryGirl.define do
   factory :user do
@@ -129,9 +119,7 @@ FactoryGirl.define do
   end
 end
 
-##
 # Polymorphic
-##
 
 FactoryGirl.define do
   factory :animal do
@@ -151,9 +139,7 @@ FactoryGirl.define do
   end
 end
 
-##
 # Contexts
-##
 
 FactoryGirl.define do
   factory :site do

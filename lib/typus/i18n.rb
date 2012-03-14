@@ -5,17 +5,15 @@ module Typus
 
     class << self
 
-      ##
-      # Instead of having to translate strings and defining a default value:
+      # Instead of having to translate strings and defining a default
+      # value to avoid "missing translation" messages:
       #
-      #     Typus::I18n.t("Hello World!", :default => 'Hello World!')
+      #     I18n.t("Hello World!", :default => 'Hello World!')
       #
-      # We define this method to define the value only once:
+      # We define a Typus translation method which will set up a default
+      # value for you: (Interpolation still works)
       #
       #     Typus::I18n.t("Hello World!")
-      #
-      # Note that interpolation still works:
-      #
       #     Typus::I18n.t("Hello %{world}!", :world => @world)
       #
       def t(key, options = {})

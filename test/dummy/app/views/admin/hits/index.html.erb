@@ -22,7 +22,7 @@
 
   <% if @items.any? -%>
     <%= build_list(@resource, fields, @items) %>
-    <%= paginate(@items, Typus.pagination) %>
+    <%= admin_paginate(@items, Typus.pagination) %>
   <% else %>
     <p><%= Typus::I18n.t("No %{resources} found.", :resources => @resource.model_name.human.downcase.pluralize) %></p>
   <% end %>

@@ -34,4 +34,8 @@ class ResourcesTest < ActiveSupport::TestCase
     assert Typus::Resources.start_year.nil?
   end
 
+  test "counters" do
+    assert Typus::Resources.counters
+  end
+
 end

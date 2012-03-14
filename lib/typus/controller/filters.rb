@@ -1,10 +1,10 @@
-##
-# How predefined filters work?
+# How to setup a predefined filter?
+# ---------------------------------
 #
-# On your controllers ...
+# On your controllers:
 #
 #     def index
-#       # Added predefined filter takes any argumes, but in the views we
+#       # Added predefined filter takes any argument, but in the views we
 #       # expected the following:
 #       #
 #       #     add_predefined_filter(filter_name, action, scope)
@@ -14,7 +14,7 @@
 #       ...
 #     end
 #
-# On your views ...
+# On your views:
 #
 #     <% predefined_filters.each do |filter_name, action, scope| %>
 #       ...

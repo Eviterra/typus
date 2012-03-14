@@ -5,15 +5,15 @@ Add **Typus** and **Devise** to your ``Gemfile``:
 
 .. code-block:: ruby
 
-  gem "devise", "~> 1.5.2"
-  gem "typus", "~> 3.1.5"
+  gem "devise", "~> 2.0.4"
+  gem "typus", "~> 3.1.9"
 
 Generate **Devise** required stuff:
 
 .. code-block:: bash
 
   rails generate devise:install
-  rails generate devise AdminUser
+  rails generate devise DeviseUser
   rake db:migrate
 
 Run the **Typus** generator:
@@ -31,25 +31,11 @@ Configure the initializer:
       config.authentication = :devise
     end
 
-There are some changes you need to do to your ``AdminUser``.
+There are some changes you need to do to your ``DeviseUser``.
 
-.. code-block:: ruby
-
-  require 'typus/orm/active_record/user/instance_methods'
-  require 'typus/orm/active_record/user/instance_methods_more'
-
-  class DeviseUser < ActiveRecord::Base
-    # Include default devise modules. Others available are:
-    # :registerable, :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
-    devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable
-
-    # Setup accessible (or protected) attributes for your model
-    attr_accessible :email, :password, :password_confirmation, :remember_me
-    attr_accessible :email, :password, :password_confirmation, :remember_me, :as => :admin
-
-    include Typus::Orm::ActiveRecord::User::InstanceMethods
-    include Typus::Orm::ActiveRecord::User::InstanceMethodsMore
-  end
+.. literalinclude:: ../../../../test/dummy/app/models/devise_user.rb
+   :language: ruby
+   :emphasize-lines: 1-2,14-15
 
 Finally start your application and go to http://localhost:3000/admin, you should
-be redirected to the sign in form provided by devise.
+be redirected to the sign in form provided by **Devise**.

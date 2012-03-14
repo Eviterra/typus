@@ -11,7 +11,7 @@
 
   <% if @items.any? -%>
     <%= table %>
-    <%= paginate(@items, Typus.pagination.merge(:anchor => association_name, :param_name => param_name)) %>
+    <%= admin_paginate(@items, Typus.pagination.merge(:anchor => association_name, :param_name => param_name)) %>
   <% else %>
     <p><%= Typus::I18n.t("No %{resources} found.", :resources => association_name.humanize.downcase.pluralize) %></p>
   <% end %>

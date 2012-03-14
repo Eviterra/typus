@@ -1,7 +1,7 @@
 rvm:
-  - 1.8.7-p352
-  - ree-1.8.7-2011.03
-  - 1.9.3-p0
+  - 1.8.7
+  - ree
+  - 1.9.3
 
 notifications:
   recipients:
@@ -13,4 +13,4 @@ branches:
     - 3-1-stable
 
 before_script:
-  - "psql -c 'create database typus_test;' -U postgres >/dev/null"
+  - "psql -c 'create database typus_test;' -U postgres"

@@ -12,11 +12,12 @@ class String
     remove_prefix.classify.constantize
   end
 
-  ##
+  def extract_singular_class
+    remove_prefix.camelize.constantize
+  end
+
   # CRUD: create, read, update, delete
-  #
-  # You can read more at http://en.wikipedia.org/wiki/Create,_read,_update_and_delete
-  #
+  # Read more at http://en.wikipedia.org/wiki/Create,_read,_update_and_delete
   def acl_action_mapper
     case self
     when "new", "create"

@@ -1,4 +1,4 @@
-source 'http://rubygems.org'
+source "http://rubygems.org"
 
 # Declare your gem's dependencies in typus.gemspec.
 # Bundler will treat runtime dependencies like base dependencies, and
@@ -8,32 +8,35 @@ gemspec
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
-  gem 'uglifier', '>= 1.0.3'
+  gem "sass-rails",   "~> 3.2.3"
+  gem "coffee-rails", "~> 3.2.1"
+  gem "uglifier", ">= 1.0.3"
 end
 
 # Database adapters
 platforms :jruby do
-  gem 'activerecord-jdbcmysql-adapter'
-  gem 'activerecord-jdbcpostgresql-adapter'
-  gem 'activerecord-jdbcsqlite3-adapter'
+  gem "activerecord-jdbcmysql-adapter"
+  gem "activerecord-jdbcpostgresql-adapter"
+  gem "activerecord-jdbcsqlite3-adapter"
 
-  gem 'jruby-openssl' # JRuby limited openssl loaded. http://jruby.org/openssl
+  gem "jruby-openssl" # JRuby limited openssl loaded. http://jruby.org/openssl
 end
 
 platforms :ruby do
-  gem 'mysql2'
-  gem 'pg'
-  gem 'sqlite3'
+  gem "mysql2"
+  gem "pg"
+  gem "sqlite3"
 end
 
-# And this stuff needed for the demo application.
+# Typus can manage lists, trees, trashes, so we want to enable this stuff
+# on the demo.
 gem "acts_as_list"
 gem "acts_as_tree"
-gem "factory_girl_rails", "~> 1.6.0"
 gem "rails-permalink", "~> 1.0.0"
 gem "rails-trash", "~> 2.0.0"
+
+# We want to be able to use Factory Girl for seeding data.
+gem "factory_girl_rails", "~> 1.6.0"
 
 # For some reason I also need to define the `jquery-rails` gem here.
 gem "jquery-rails"
@@ -69,3 +72,6 @@ group :development do
 end
 
 gem "SystemTimer", :platform => :ruby_18
+
+gem "kaminari"
+# gem "will_paginate"

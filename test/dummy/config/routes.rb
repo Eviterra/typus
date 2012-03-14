@@ -1,6 +1,6 @@
 Dummy::Application.routes.draw do
 
-  devise_for :devise_users, :sign_out_via => [ :get ]
+  devise_for :devise_users
 
   scope "admin", :module => :admin, :as => "admin" do
     get "settings" => "settings#index", :as => "settings"

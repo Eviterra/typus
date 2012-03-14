@@ -45,6 +45,9 @@ module Typus
     mattr_accessor :export
     @@export = ""
 
+    mattr_accessor :counters
+    @@counters = true
+
     def self.method_missing(*args)
       nil
     end

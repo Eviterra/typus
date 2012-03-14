@@ -12,8 +12,6 @@ require "typus/orm/base/search"
 require "typus/orm/active_record"
 require "typus/orm/mongoid"
 
-require "kaminari"
-
 autoload :FakeUser, "support/fake_user"
 
 module Typus
@@ -53,13 +51,7 @@ module Typus
 <a href="http://core.typuscmf.com/">core.typuscmf.com</a>
   CODE
 
-  ##
-  # Available Authentication Mechanisms are:
-  #
-  # - none
-  # - basic: Uses http authentication
-  # - session
-  #
+  # Set authentication (none, basic, session or devise)
   mattr_accessor :authentication
   @@authentication = :none
 
@@ -72,35 +64,17 @@ module Typus
   mattr_accessor :subdomain
   @@subdomain = nil
 
-  ##
-  # Pagination options passed to Kaminari helper.
-  #
-  #     :previous_label => "&larr; " + Typus::I18n.t("Previous")
-  #     :next_label => Typus::I18n.t("Next") + " &rarr;"
-  #
-  # Note that `Kaminari` only accepts the following configuration options:
-  #
-  # - default_per_page (25 by default)
-  # - window (4 by default)
-  # - outer_window (0 by default)
-  # - left (0 by default)
-  # - right (0 by default)
-  #
+  # Pagination options passed to pagination helper. Note that pagination
+  # options are different in Kaminari and WillPaginate.
   mattr_accessor :pagination
   @@pagination = { :window => 0 }
 
-  ##
-  # Define a password.
-  #
-  # Used as default password for http and advanced authentication.
-  #
+  # Define a default password for http authentication.
   mattr_accessor :password
   @@password = "columbia"
 
-  ##
-  # Configure the e-mail address which will be shown in Admin::Mailer. If not
-  # set `forgot_password` feature is disabled.
-  #
+  # Configure the e-mail address which will be shown in Admin::Mailer.
+  # If not set `forgot_password` feature is disabled.
   mattr_accessor :mailer_sender
   @@mailer_sender = nil
 
@@ -127,9 +101,7 @@ module Typus
   mattr_accessor :image_table_thumb_size
   @@image_table_thumb_size = '25x25#'
 
-  ##
-  # Defines the default relationship table.
-  #
+  # Define the default relationship table.
   mattr_accessor :relationship
   @@relationship = "typus_users"
 
@@ -147,8 +119,8 @@ module Typus
 
   class << self
 
-    # Default way to setup typus. Run `rails generate typus` to create a fresh
-    # initializer with all configuration values.
+    # Default way to setup typus. Run `rails generate typus` to create a
+    # fresh initializer with all configuration values.
     def setup
       yield self
       reload!
@@ -197,7 +169,7 @@ module Typus
     # Lists models under <tt>app/models</tt>.
     def detect_application_models
       model_dir = Rails.root.join("app/models")
-      Dir.chdir(model_dir) { Dir["**/*.rb"] }
+      Dir.chdir(model_dir.to_s) { Dir["**/*.rb"] }
     end
 
     def application_models
@@ -230,14 +202,14 @@ module Typus
       app = Typus.root.join("**", "*.yml")
       plugins = Rails.root.join("vendor", "plugins", "*", "config", "typus", "**", "*.yml")
       lib = Rails.root.join("lib", "*", "config", "typus", "**", "*.yml")
-      Dir[app, plugins, lib].reject { |f| f.match(/_roles.yml/) }.sort
+      Dir[app.to_s, plugins.to_s, lib.to_s].reject { |f| f.match(/_roles.yml/) }.sort
     end
 
     def role_configuration_files
       app = Typus.root.join("**", "*_roles.yml")
       plugins = Rails.root.join("vendor", "plugins", "*", "config", "typus", "**", "*_roles.yml")
       lib = Rails.root.join("lib", "*", "config", "typus", "**", "*_roles.yml")
-      Dir[app, plugins, lib].sort
+      Dir[app.to_s, plugins.to_s, lib.to_s].sort
     end
 
     def reload!

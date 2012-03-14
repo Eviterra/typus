@@ -497,3 +497,25 @@ You can also define this option by model.
     ...
     options:
       start_year: 1990
+
+
+Counters
+^^^^^^^^
+
+If you want to show resources count when listing items. Disable it if you have
+resources with many records.
+
+.. code-block:: ruby
+
+  Typus::Resources.setup do |config|
+    config.counters = true
+  end
+
+You can also define this option by model.
+
+.. code-block:: yaml
+
+  Post:
+    ...
+    options:
+      counters: true

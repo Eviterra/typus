@@ -18,6 +18,8 @@ postgresql: &postgresql
   username: <%= ENV['DB_USERNAME'] || 'postgres' %>
   password: <%= ENV['DB_PASSWORD'] || '' %>
   min_messages: warning
+  # host: localhost
+  # port: 5432
 
 mysql2: &mysql2
   adapter: mysql2

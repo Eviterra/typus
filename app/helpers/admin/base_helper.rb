@@ -4,7 +4,7 @@ module Admin::BaseHelper
     content_for(:title) { page_title }
   end
 
-  def header
+  def admin_header
     locals = { :admin_title => admin_title }
     render "helpers/admin/base/header", locals
   end

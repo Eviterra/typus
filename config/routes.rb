@@ -10,7 +10,7 @@ Rails.application.routes.draw do
 
     if Typus.authentication == :session
       resource :session, :only => [:new, :create], :controller => :session do
-        get :destroy, :as => "destroy"
+        delete :destroy, :as => "destroy"
       end
 
       resources :account, :only => [:new, :create, :show] do

@@ -64,6 +64,7 @@ Customization
 
   customization/*
 
+
 Recipes
 -------
 
@@ -72,6 +73,7 @@ Recipes
   :glob:
 
   recipes/*
+
 
 Misc
 ----

@@ -1,7 +1,42 @@
 CHANGELOG
 =========
 
-3.1.8 (unreleased)
+3.1.10 (unrelased)
+------------------
+
+Changes: <https://github.com/fesplugas/typus/compare/v3.1.9...master>
+
+
+3.1.9 (2012-03-08)
+------------------
+
+ * [FIXED] _addanother save button is only shown if the user has permission
+   to perform the action.
+
+ * [FIXED] Custom actions on show are now showed.
+
+ * [CHANGED] Detect if application has Kaminari or WillPaginate, otherwise
+   we will not setup a paginate and will tell the user to install one of
+   those mechanisms. In the near future Typus will provide a simple
+   pagination mechahism.
+
+ * [NEW] Option to enable and disable counters on resources. Enabled by default.
+
+ * [FIXED] Fixed Dir compatibility for Jruby.
+
+ * [CHANGED] session#destroy now uses DELETE.
+
+ * [CHANGED] CSV/XML links should include filters.
+
+ * [CHANGED] Removed find_in_batches from "csv_export". It was useless.
+
+ * [FIXED] Fixed converting route to resource for "singular" class. Eg.
+   "CustomerData" was being converted to "CustomerDatum".
+
+Changes: <https://github.com/fesplugas/typus/compare/v3.1.8...v3.1.9>
+
+
+3.1.8 (2012-02-05)
 ------------------
 
  * [CHANGED] CSV generation is now performed in memory so we play nice
@@ -19,7 +54,7 @@ CHANGELOG
  * [CHANGED] Updated Gems for the dummy application. This fixes deprecation
    warnings and keeps the plugin up to date.
 
-Changes: <https://github.com/fesplugas/typus/compare/v3.1.7...master>
+Changes: <https://github.com/fesplugas/typus/compare/v3.1.7...v3.1.8>
 
 
 3.1.7 (2012-01-25)

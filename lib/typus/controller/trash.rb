@@ -1,6 +1,4 @@
-##
 # Module designed to work with `rails-trash`.
-#
 module Typus
   module Controller
     module Trash

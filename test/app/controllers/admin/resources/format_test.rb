@@ -29,6 +29,30 @@ Title,Published
     assert_equal expected, response.body
   end
 
+  test "export CSV with filters" do
+    Entry.delete_all
+    entry_published = FactoryGirl.create(:entry, :published => true)
+    entry_unpublished = FactoryGirl.create(:entry, :published => false)
+
+    expected_published = <<-RAW
+Title,Published
+#{entry_published.title},true
+     RAW
+
+     get :index, :format => "csv", :published => "true"
+     assert_response :success
+     assert_equal expected_published, response.body
+
+    expected_unpublished = <<-RAW
+Title,Published
+#{entry_unpublished.title},false
+     RAW
+
+     get :index, :format => "csv", :published => "true"
+     assert_response :success
+     assert_equal expected_published, response.body
+  end
+
   test "export XML" do
     pending
   end

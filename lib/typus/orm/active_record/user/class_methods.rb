@@ -9,7 +9,7 @@ module Typus
             options[:password] ||= Typus.password
             options[:role] ||= Typus.master_role
             options[:status] = true
-            user = new options, :without_protection => true
+            user = new(options, :without_protection => true)
             user.save ? user : false
           end
 

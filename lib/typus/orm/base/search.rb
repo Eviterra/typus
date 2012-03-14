@@ -44,13 +44,8 @@ module Typus
           ["#{key}.id = ?", value]
         end
 
-        ##
-        # To build conditions we reject all those params which are not model
-        # fields.
-        #
-        # Note: We still want to be able to search so the search param is not
-        #       rejected.
-        #
+        # To build conditions we accept only model fields and the search
+        # param.
         def build_conditions(params)
           Array.new.tap do |conditions|
             query_params = params.dup

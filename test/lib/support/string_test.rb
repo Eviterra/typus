@@ -17,21 +17,16 @@ class StringTest < ActiveSupport::TestCase
     assert_equal "delayed/tasks", "typus/delayed/tasks".remove_prefix
   end
 
-=begin
   test "extract_class" do
-    class SucursalBancaria; end
-
-    Typus::Configuration.models_constantized = { "Post" => Post,
-                                                 "TypusUser" => TypusUser,
-                                                 "Delayed::Task" => Delayed::Task,
-                                                 "SucursalBancaria" => SucursalBancaria }
-
     assert_equal Post, "admin/posts".extract_class
     assert_equal TypusUser, "admin/typus_users".extract_class
     assert_equal Delayed::Task, "admin/delayed/tasks".extract_class
     assert_equal SucursalBancaria, "admin/sucursales_bancarias".extract_class
   end
-=end
+
+  test "extract_singular_class" do
+    assert_equal CustomerData, "admin/customer_data".extract_singular_class
+  end
 
   test "acl_action_mapper returns create" do
     assert_equal "create", "new".acl_action_mapper

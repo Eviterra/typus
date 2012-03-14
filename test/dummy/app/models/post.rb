@@ -36,7 +36,7 @@ class Post < ActiveRecord::Base
   end
 
   def self.numeric_statuses
-    0.upto(5)
+    0.upto(5).to_a
   end
 
   def self.array_selector
