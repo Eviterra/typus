@@ -22,9 +22,14 @@ module Typus
           self.order_by(order_array)
         end
 
-        # For the moment return model fields.
         def typus_fields_for(filter)
-          model_fields
+          m_fields = model_fields
+
+          ActiveSupport::OrderedHash.new.tap do |fields_with_type|
+            get_typus_fields_for(filter).each do |field|
+              fields_with_type[field.to_s] ||= m_fields[field]
+            end
+          end
         end
 
         def virtual_attribute?(field)
