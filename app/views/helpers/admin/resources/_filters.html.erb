@@ -5,7 +5,7 @@
       <% filters.each do |filter| %>
         <% key, values, type = filter[:key], filter[:values], filter[:type] %>
         <% case type %>
-        <% when :date, :datetime, :timestamp %>
+        <% when :date, :datetime, :timestamp, :time %>
           <li><%= text_field_tag key, params[key], :class => "daterangepicker", :title => @resource.human_attribute_name(key), :autocomplete => 'off' %></li>
         <% else %>
           <li><%= select_tag key, options_for_select(values, params[key]) %></li>
