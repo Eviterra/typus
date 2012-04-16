@@ -27,6 +27,11 @@ module Typus
 
           ActiveSupport::OrderedHash.new.tap do |fields_with_type|
             get_typus_fields_for(filter).each do |field|
+              [:virtual, :custom, :association, :selector, :dragonfly, :paperclip].each do |attribute|
+                if (value = send("#{attribute}_attribute?", field))
+                  fields_with_type[field.to_s] = value
+                end
+              end
               fields_with_type[field.to_s] ||= m_fields[field]
             end
           end
