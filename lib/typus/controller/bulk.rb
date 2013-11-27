@@ -24,7 +24,7 @@ module Typus
         if (ids = params[:selected_item_ids]) && (action = params[:batch_action]).present?
           send(params[:batch_action], ids)
         else
-          notice = if action.empty?
+          notice = if !action.present?
             Typus::I18n.t("No bulk action selected.")
           else
             Typus::I18n.t("Items must be selected in order to perform actions on them. No items have been changed.")
