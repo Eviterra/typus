@@ -10,12 +10,11 @@ class Admin::ResourcesController < Admin::BaseController
   before_filter :get_model
   before_filter :set_context
   before_filter :get_object, :only => Whitelist + [:show]
+  before_filter :get_objects, :only => [:index]
   before_filter :check_resource_ownership, :only => Whitelist
   before_filter :check_if_user_can_perform_action_on_resources
 
   def index
-    get_objects
-
     custom_actions_for(:index).each do |action|
       prepend_resources_action(action.titleize, {:action => action, :id => nil})
     end
